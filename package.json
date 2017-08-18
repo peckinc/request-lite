@@ -1,6 +1,6 @@
 {
   "name": "@peck/request-lite",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Zero-dependency utility for making http requests and returning ES6 promises",
   "main": "index.js",
   "types": "index.d.ts",
@@ -10,6 +10,10 @@
   "author": "Daniel Tyreus <daniel@peck.me> (http://www.peck.me)",
   "license": "ISC",
   "dependencies": {},
+  "repository" :{ 
+    "type" : "git", 
+    "url" : "https://github.com/peckinc/request-lite"
+  },
   "devDependencies": {
     "mocha": "^3.2.0",
     "mock-http-server": "^0.1.0"
