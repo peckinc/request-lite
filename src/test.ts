@@ -33,7 +33,7 @@ describe('@peck/request-lite', function () {
             method: 'GET',
             json: true
         }).then((response) => {
-            done(new Error("Get / should have thrown an error"));
+            done.fail(new Error("Get / should have thrown an error"));
         }).catch((error) => {
             done();
         });
@@ -77,7 +77,7 @@ describe('@peck/request-lite', function () {
             assert(response.data.hello == "world");
             done();
         }).catch((error) => {
-            done(error);
+            done.fail(error);
         });
         
     });
