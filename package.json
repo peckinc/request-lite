@@ -5,14 +5,17 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test.js"
+    "test": "./node_modules/mocha/bin/mocha test.js",
+    "build": "tsc -p tsconfig.json"
   },
   "author": "Daniel Tyreus <daniel@peck.me> (http://www.peck.me)",
   "license": "ISC",
-  "dependencies": {},
-  "repository" :{ 
-    "type" : "git", 
-    "url" : "https://github.com/peckinc/request-lite"
+  "dependencies": {
+    "@types/node": "^8.0.24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peckinc/request-lite"
   },
   "devDependencies": {
     "mocha": "^3.2.0",

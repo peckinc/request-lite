@@ -1,4 +1,3 @@
-/// <reference types="es6-promise" />
 export default function request(options: {
     url: string;
     method: string;
