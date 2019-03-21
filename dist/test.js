@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("./index");
 var assert = require("assert");
 var ServerMock = require("mock-http-server");

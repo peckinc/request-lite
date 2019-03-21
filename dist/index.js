@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var url = require("url");
 var http = require("http");
 var https = require("https");
@@ -23,7 +24,6 @@ function request(options) {
     });
     return promise;
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = request;
 function requestImpl(roptions, tries, callback) {
     var retryErrors = ['ECONNRESET', 'ETIMEDOUT', 'ESOCKETTIMEDOUT'];
