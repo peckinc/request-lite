@@ -1,6 +1,7 @@
 import * as url from 'url';
 import * as http from 'http';
 import * as https from 'https';
+import {HttpError} from './http-error';
 
 export default function request(options: {
     url: string;
@@ -25,9 +26,9 @@ export default function request(options: {
     var promise = new Promise<{ statusCode: number, data: any }>(
 
         function (resolve, reject) {
-            requestImpl(options, 0, (error: Error, response: { statusCode: number, data: any }) => {
+            requestImpl(options, 0, (error: HttpError, response: { statusCode: number, data: any }) => {
                 if (error) {
-                    reject(error.message);
+                    reject(error);
                 } else {
                     resolve(response);
                 }
@@ -46,7 +47,7 @@ function requestImpl(roptions: {
     body?: any;
     timeout?: number;
     retries?: number;
-}, tries: number, callback: (error: Error, response: { statusCode: number, data: any }) => void) {
+}, tries: number, callback: (error: HttpError, response: { statusCode: number, data: any }) => void) {
 
     let retryErrors = ['ECONNRESET', 'ETIMEDOUT', 'ESOCKETTIMEDOUT'];
 
@@ -77,8 +78,9 @@ function requestImpl(roptions: {
         //console.log(`${roptions.url} STATUS: ${response.statusCode}`);
 
         if ((response.statusCode < 200) || (response.statusCode > 299)) {
-            let err:Error = new Error();
-            err.message = `status code ${response.statusCode} while connecting to ${roptions.url}`;
+            let message = `status code ${response.statusCode} while connecting to ${roptions.url}`;
+            
+            let err:HttpError = new HttpError(response.statusCode, message);
             //console.log(err.message);
             callback(err, null);
             return;
@@ -116,7 +118,7 @@ function requestImpl(roptions: {
             requestImpl(roptions, nextTry, callback);
         }
         else {
-            let err: Error = new Error(`${roptions.url} responded with ${e.code}`);
+            let err: HttpError = new HttpError(e.code,`${roptions.url} responded with ${e.code}`);
             callback(err, null);
         }
     });

@@ -1,5 +1,6 @@
 import request from './index'
 import * as assert from 'assert';
+import { HttpError } from './http-error';
 
 let ServerMock = require("mock-http-server");
 
@@ -34,7 +35,8 @@ describe('@peck/request-lite', function () {
             json: true
         }).then((response) => {
             done.fail(new Error("Get / should have thrown an error"));
-        }).catch((error) => {
+        }).catch((error:HttpError) => {
+            assert(error.statusCode == 404);
             done();
         });
         

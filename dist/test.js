@@ -30,6 +30,7 @@ describe('@peck/request-lite', function () {
         }).then(function (response) {
             done.fail(new Error("Get / should have thrown an error"));
         }).catch(function (error) {
+            assert(error.statusCode == 404);
             done();
         });
     });

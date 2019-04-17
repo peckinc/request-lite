@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var url = require("url");
 var http = require("http");
 var https = require("https");
+var http_error_1 = require("./http-error");
 function request(options) {
     var timeout = 2.4 * 1000;
     var retries = 3;
@@ -15,7 +16,7 @@ function request(options) {
     var promise = new Promise(function (resolve, reject) {
         requestImpl(options, 0, function (error, response) {
             if (error) {
-                reject(error.message);
+                reject(error);
             }
             else {
                 resolve(response);
@@ -50,8 +51,8 @@ function requestImpl(roptions, tries, callback) {
     var req = protocol.request(options, function (response) {
         //console.log(`${roptions.url} STATUS: ${response.statusCode}`);
         if ((response.statusCode < 200) || (response.statusCode > 299)) {
-            var err = new Error();
-            err.message = "status code " + response.statusCode + " while connecting to " + roptions.url;
+            var message = "status code " + response.statusCode + " while connecting to " + roptions.url;
+            var err = new http_error_1.HttpError(response.statusCode, message);
             //console.log(err.message);
             callback(err, null);
             return;
@@ -84,7 +85,7 @@ function requestImpl(roptions, tries, callback) {
             requestImpl(roptions, nextTry, callback);
         }
         else {
-            var err = new Error(roptions.url + " responded with " + e.code);
+            var err = new http_error_1.HttpError(e.code, roptions.url + " responded with " + e.code);
             callback(err, null);
         }
     });
