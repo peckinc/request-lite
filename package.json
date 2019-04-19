@@ -1,6 +1,6 @@
 {
   "name": "@peck/request-lite",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Zero-dependency utility for making http requests and returning ES6 promises",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

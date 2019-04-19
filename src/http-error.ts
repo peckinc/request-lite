@@ -6,5 +6,6 @@ class HttpError extends Error {
         super(message || STATUS_CODES[statusCode]);
         this.name = STATUS_CODES[statusCode];
     }
+    public location?: string;
 }
-export {HttpError};
+export { HttpError };

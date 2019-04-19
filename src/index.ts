@@ -81,10 +81,18 @@ function requestImpl(roptions: {
             let message = `status code ${response.statusCode} while connecting to ${roptions.url}`;
             
             let err:HttpError = new HttpError(response.statusCode, message);
-            //console.log(err.message);
+
+            if ((response.statusCode > 299) && (response.statusCode<400)) {
+                if (response.headers && response.headers.location) {
+                    err.location = response.headers.location;
+                }
+            }
+
             callback(err, null);
             return;
         }
+
+
 
         response.on('data', function (chunk) {
             str += chunk;

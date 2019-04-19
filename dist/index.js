@@ -53,7 +53,11 @@ function requestImpl(roptions, tries, callback) {
         if ((response.statusCode < 200) || (response.statusCode > 299)) {
             var message = "status code " + response.statusCode + " while connecting to " + roptions.url;
             var err = new http_error_1.HttpError(response.statusCode, message);
-            //console.log(err.message);
+            if ((response.statusCode > 299) && (response.statusCode < 400)) {
+                if (response.headers && response.headers.location) {
+                    err.location = response.headers.location;
+                }
+            }
             callback(err, null);
             return;
         }
